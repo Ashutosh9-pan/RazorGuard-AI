@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RazorGuard AI | Payment Risk Manager</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="brand-icon">R</div>
+
+                <div>
+                    <h2>RazorGuard</h2>
+                    <span>AI Risk Manager</span>
+                </div>
+            </div>
+
+            <nav>
+                <a class="nav-item active" href="#dashboard" data-target="dashboard">
+                    <span>⌂</span>
+                    Dashboard
+                </a>
+
+                <a class="nav-item" href="#transaction-analysis" data-target="transaction-analysis">
+                    <span>◉</span>
+                    Transaction Analysis
+                </a>
+
+                <a class="nav-item" href="#risk-insights" data-target="risk-insights">
+                    <span>◈</span>
+                    Risk Insights
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="system-status">
+                    <span class="status-dot"></span>
+
+                    <div>
+                        <strong>System Online</strong>
+                        <small>ML Engine Active</small>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main" id="dashboard">
+
+            <header class="topbar">
+
+                <div>
+                    <p class="eyebrow">PAYMENT SECURITY</p>
+
+                    <h1>Transaction Risk Manager</h1>
+
+                    <p class="subtitle">
+                        Analyze payment transactions using machine learning
+                        and explainable risk signals.
+                    </p>
+                </div>
+
+                <div class="model-badge">
+                    <span></span>
+                    Random Forest
+                </div>
+
+            </header>
+
+
+            <section class="dashboard-grid" id="transaction-analysis">
+
+                <!-- Transaction Form -->
+                <div class="card transaction-card">
+
+                    <div class="card-header">
+                        <div>
+                            <p class="section-label">TRANSACTION INPUT</p>
+                            <h2>Analyze Transaction</h2>
+                        </div>
+
+                        <div class="card-icon">↗</div>
+                    </div>
+
+
+                    <form id="riskForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label for="amount">
+                                    Transaction Amount
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <span>₹</span>
+
+                                    <input
+                                        type="number"
+                                        id="amount"
+                                        value=""
+                                        min="0"
+                                        step="0.01"
+                                        required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="account_age_days">
+                                    Account Age
+                                </label>
+
+                                <div class="input-wrapper">
+                                    <input
+                                        type="number"
+                                        id="account_age_days"
+                                        value=""
+                                        min="0"
+                                        required>
+
+                                    <span>days</span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="transactions_24h">
+                                    Transactions (24h)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="transactions_24h"
+                                    value=""
+                                    min="0"
+                                    required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="failed_transactions_24h">
+                                    Failed Transactions (24h)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="failed_transactions_24h"
+                                    value=""
+                                    min="0"
+                                    required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="device_changes_30d">
+                                    Device Changes (30d)
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="device_changes_30d"
+                                    value=""
+                                    min="0"
+                                    required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="previous_chargebacks">
+                                    Previous Chargebacks
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="previous_chargebacks"
+                                    value=""
+                                    min="0"
+                                    required>
+                            </div>
+
+                        </div>
+
+
+                        <div class="toggle-section">
+
+                            <div class="toggle-row">
+                                <div>
+                                    <strong>Location Mismatch</strong>
+                                    <small>Transaction location differs from expected location</small>
+                                </div>
+
+                                <label class="switch">
+                                    <input type="checkbox" id="location_mismatch">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+
+                            <div class="toggle-row">
+                                <div>
+                                    <strong>International Transaction</strong>
+                                    <small>Payment originates from an international location</small>
+                                </div>
+
+                                <label class="switch">
+                                    <input type="checkbox" id="international_transaction">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                        </div>
+
+
+                        <button type="submit" class="analyze-btn">
+                            <span>Analyze Payment Risk</span>
+                            <span>→</span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- Risk Result -->
+                <div class="card result-card">
+
+                    <div class="card-header">
+                        <div>
+                            <p class="section-label">AI RISK ASSESSMENT</p>
+                            <h2>Risk Overview</h2>
+                        </div>
+                    </div>
+
+
+                    <div class="risk-display">
+
+                        <div class="risk-circle">
+                            <div>
+                                <strong id="riskScore">--</strong>
+                                <span>/100</span>
+                            </div>
+                        </div>
+
+                        <div class="risk-info">
+                            <span class="risk-label">CURRENT RISK</span>
+
+                            <h3 id="riskLevel">
+                                Waiting for analysis
+                            </h3>
+
+                            <p id="riskProbability">
+                                Submit a transaction to generate
+                                an AI risk assessment.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-bar">
+                        <div id="riskBar"></div>
+                    </div>
+
+
+                    <div class="result-section">
+
+                        <div class="result-title">
+                            <span>Detected Risk Factors</span>
+                            <span id="factorCount">0</span>
+                        </div>
+
+                        <div id="riskFactors" class="risk-factors">
+
+                            <div class="empty-state">
+                                No analysis performed yet.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Risk Explanation -->
+            <section class="risk-explanation-section">
+                <div class="section-header">
+                    <div>
+                        <span class="section-eyebrow">DECISION EXPLANATION</span>
+                        <h2>Why was this transaction flagged?</h2>
+                        <p>Supporting risk signals behind the current risk assessment.</p>
+                    </div>
+                </div>
+
+                <div class="explanation-card">
+                    <div class="explanation-summary" id="riskExplanationSummary">
+                        Analyze a transaction to see why it was flagged.
+                    </div>
+
+                    <div class="explanation-signals" id="riskExplanationSignals">
+                        <div class="explanation-empty">
+                            No risk signals available yet.
+                        </div>
+                    </div>
+
+                    <div class="explanation-note">
+                        <strong>Note:</strong>
+                        These are supporting rule-based risk signals shown alongside
+                        the machine-learning risk score. They are not direct model
+                        feature-attribution values.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended Action -->
+<div class="action-card" id="actionCard">
+    <div class="action-icon" id="actionIcon">🛡️</div>
+
+    <div class="action-content">
+        <span class="action-label">RECOMMENDED ACTION</span>
+        <h3 id="recommendedAction">Awaiting transaction analysis</h3>
+        <p id="actionDescription">
+            Analyze a transaction to receive a defensive risk-management recommendation.
+        </p>
+    </div>
+</div>
+
+<!-- ==========================================
+     Financial Exposure
+========================================== -->
+
+<section class="exposure-section">
+
+    <div class="exposure-header">
+        <div>
+            <span class="section-eyebrow">FINANCIAL RISK</span>
+            <h2>Amount at Risk</h2>
+            <p>Estimated transaction exposure based on the current AI risk assessment.</p>
+        </div>
+    </div>
+
+    <div class="exposure-card">
+
+        <div class="exposure-main">
+            <span class="exposure-label">ESTIMATED EXPOSURE</span>
+
+            <div class="exposure-value">
+                <span>₹</span>
+                <strong id="exposureAmount">--</strong>
+            </div>
+
+            <p id="exposureDescription">
+                Analyze a transaction to estimate its financial exposure.
+            </p>
+        </div>
+
+        <div class="exposure-details">
+
+            <div class="exposure-detail">
+                <span>Transaction Amount</span>
+                <strong id="exposureTransactionAmount">₹--</strong>
+            </div>
+
+            <div class="exposure-detail">
+                <span>Risk Probability</span>
+                <strong id="exposureRiskProbability">--</strong>
+            </div>
+
+            <div class="exposure-detail">
+                <span>Risk Level</span>
+                <strong id="exposureRiskLevel">--</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+            <!-- Bottom cards -->
+            <section class="bottom-grid">
+
+                <div class="info-card">
+                    <span class="info-icon">✓</span>
+
+                    <div>
+                        <strong>Explainable Decisions</strong>
+
+                        <p>
+                            Every prediction includes the key risk
+                            indicators detected by the system.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="info-card">
+                    <span class="info-icon">◉</span>
+
+                    <div>
+                        <strong>ML-Powered Detection</strong>
+
+                        <p>
+                            Random Forest classification model trained
+                            on synthetic payment-risk transactions.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="info-card">
+                    <span class="info-icon">↗</span>
+
+                    <div>
+                        <strong>Risk Score</strong>
+
+                        <p>
+                            Converts model probability into an easy-to-read
+                            0–100 risk score.
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Risk Insights -->
+<section class="insights-section" id="risk-insights">
+
+    <div class="insights-header">
+        <div>
+            <p class="section-label">MODEL INTELLIGENCE</p>
+            <h2>Risk Insights</h2>
+            <p>
+                Performance and risk signals from the held-out test set.
+            </p>
+        </div>
+
+        <div class="evaluation-badge">
+            ● Held-out Test Set
+        </div>
+    </div>
+
+    <!-- ==========================================
+     Real-Time Risk Statistics
+========================================== -->
+
+<section class="stats-section">
+
+    <div class="stats-header">
+        <div>
+            <span class="section-eyebrow">LIVE MONITORING</span>
+            <h2>Risk Overview</h2>
+            <p>Real-time summary of analyzed transactions.</p>
+        </div>
+
+        <div class="live-indicator">
+            <span class="live-dot"></span>
+            LIVE
+        </div>
+    </div>
+
+    <div class="stats-grid">
+
+        <!-- Total Transactions -->
+        <div class="stat-card">
+            <div class="stat-icon total-icon">
+                ◈
+            </div>
+
+            <div class="stat-content">
+                <span class="stat-label">TOTAL TRANSACTIONS</span>
+                <strong id="totalTransactions">0</strong>
+                <span class="stat-subtitle">Analyzed</span>
+            </div>
+        </div>
+
+
+        <!-- High Risk -->
+        <div class="stat-card">
+            <div class="stat-icon high-icon">
+                !
+            </div>
+
+            <div class="stat-content">
+                <span class="stat-label">HIGH RISK</span>
+                <strong id="highRiskCount">0</strong>
+                <span class="stat-subtitle">Require review</span>
+            </div>
+        </div>
+
+
+        <!-- Medium Risk -->
+        <div class="stat-card">
+            <div class="stat-icon medium-icon">
+                ⚠
+            </div>
+
+            <div class="stat-content">
+                <span class="stat-label">MEDIUM RISK</span>
+                <strong id="mediumRiskCount">0</strong>
+                <span class="stat-subtitle">Step-up verification</span>
+            </div>
+        </div>
+
+
+        <!-- Low Risk -->
+        <div class="stat-card">
+            <div class="stat-icon low-icon">
+                ✓
+            </div>
+
+            <div class="stat-content">
+                <span class="stat-label">LOW RISK</span>
+                <strong id="lowRiskCount">0</strong>
+                <span class="stat-subtitle">Allowed</span>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- ==========================================
+     Risk Distribution
+========================================== -->
+
+    <section class="distribution-section">
+
+        <div class="distribution-header">
+            <div>
+                <span class="section-eyebrow">RISK ANALYTICS</span>
+                <h2>Risk Distribution</h2>
+                <p>Current distribution of analyzed transactions by risk level.</p>
+            </div>
+        </div>
+
+        <div class="distribution-card">
+            <div class="distribution-chart">
+                <div class="donut-chart" id="riskDonut">
+                    <div class="donut-center">
+                        <strong id="distributionTotal">0</strong>
+                        <span>Transactions</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="distribution-legend">
+                <div class="legend-item">
+                    <div class="legend-left">
+                        <span class="legend-dot high-dot"></span>
+                        <div><strong>High Risk</strong><span>Requires review</span></div>
+                    </div>
+                    <div class="legend-value">
+                        <strong id="distributionHigh">0</strong>
+                        <span id="distributionHighPercent">0%</span>
+                    </div>
+                </div>
+
+                <div class="legend-item">
+                    <div class="legend-left">
+                        <span class="legend-dot medium-dot"></span>
+                        <div><strong>Medium Risk</strong><span>Step-up verification</span></div>
+                    </div>
+                    <div class="legend-value">
+                        <strong id="distributionMedium">0</strong>
+                        <span id="distributionMediumPercent">0%</span>
+                    </div>
+                </div>
+
+                <div class="legend-item">
+                    <div class="legend-left">
+                        <span class="legend-dot low-dot"></span>
+                        <div><strong>Low Risk</strong><span>Allowed</span></div>
+                    </div>
+                    <div class="legend-value">
+                        <strong id="distributionLow">0</strong>
+                        <span id="distributionLowPercent">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ==========================================
+     Risk Activity Trend
+========================================== -->
+
+    <section class="risk-trend-section">
+        <div class="trend-header">
+            <div>
+                <span class="section-eyebrow">ACTIVITY MONITORING</span>
+                <h2>Risk Activity Trend</h2>
+                <p>Recent transaction risk scores from the live audit trail.</p>
+            </div>
+
+            <span class="trend-badge">Recent Transactions</span>
+        </div>
+
+        <div class="trend-summary">
+            <div class="trend-stat">
+                <span>Highest Risk Score</span>
+                <strong id="trendHighestScore">--</strong>
+            </div>
+
+            <div class="trend-stat">
+                <span>Average Risk Score</span>
+                <strong id="trendAverageScore">--</strong>
+            </div>
+
+            <div class="trend-stat">
+                <span>High-Risk Alerts</span>
+                <strong id="trendHighAlerts">0</strong>
+            </div>
+        </div>
+
+        <div class="trend-card">
+            <div id="riskTrendChart" class="risk-trend-chart">
+                <div class="trend-empty">
+                    Analyze transactions to build the risk activity trend.
+                </div>
+            </div>
+
+            <div class="trend-scale">
+                <span>0</span>
+                <span>25</span>
+                <span>50</span>
+                <span>75</span>
+                <span>100</span>
+            </div>
+        </div>
+
+        <div class="trend-note">
+            <strong>Data source:</strong> This chart uses the latest transactions in the in-memory audit trail.
+            It is a recent-activity view, not a time-series forecast.
+        </div>
+    </section>
+
+    <!-- ==========================================
+     Transaction Audit Trail
+========================================== -->
+
+<section class="audit-section">
+
+    <div class="section-header">
+        <div>
+            <span class="section-eyebrow">SECURITY LOG</span>
+            <h2>Transaction Audit Trail</h2>
+            <p>
+                Recent risk decisions generated by RazorGuard AI.
+            </p>
+        </div>
+
+      <div class="audit-actions">
+
+    <button
+        type="button"
+        class="refresh-btn"
+        id="refreshAuditBtn">
+        ↻ Refresh
+    </button>
+
+    <button
+        type="button"
+        class="clear-btn"
+        id="clearAuditBtn">
+        🗑 Clear
+    </button>
+
+    <button
+        type="button"
+        class="export-btn"
+        id="exportAuditBtn">
+        <span>↓</span>
+        Export CSV
+    </button>
+
+    <div class="audit-status">
+        <span class="status-dot"></span>
+        <span id="auditCount">0 Transactions</span>
+    </div>
+
+</div>
+    </div>
+
+    <div class="audit-table-wrapper">
+
+        <table class="audit-table">
+
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Risk Score</th>
+                    <th>Risk Level</th>
+                    <th>Risk Factors</th>
+                    <th>Recommended Action</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+
+            <tbody id="auditTableBody">
+
+                <tr>
+                    <td colspan="6">
+                        <div class="empty-state">
+                            No transactions analyzed yet.
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+    <!-- Performance Cards -->
+    <div class="metrics-grid">
+
+        <div class="metric-card">
+            <span>Accuracy</span>
+            <strong id="metricAccuracy">--</strong>
+            <small>Overall classification</small>
+        </div>
+
+        <div class="metric-card">
+            <span>Precision</span>
+            <strong id="metricPrecision">--</strong>
+            <small>Risk prediction precision</small>
+        </div>
+
+        <div class="metric-card">
+            <span>Recall</span>
+            <strong id="metricRecall">--</strong>
+            <small>Risk detection coverage</small>
+        </div>
+
+        <div class="metric-card">
+            <span>F1 Score</span>
+            <strong id="metricF1">--</strong>
+            <small>Precision-recall balance</small>
+        </div>
+
+    </div>
+
+
+    <!-- Insights Grid -->
+    <div class="insights-grid">
+
+        <!-- Confusion Matrix -->
+        <div class="insight-card">
+
+            <div class="insight-card-header">
+                <div>
+                    <p class="section-label">CLASSIFICATION RESULTS</p>
+                    <h3>Confusion Matrix</h3>
+                </div>
+            </div>
+
+            <div class="confusion-grid">
+
+                <div class="matrix-item">
+                    <span>True Negative</span>
+                    <strong id="trueNegative">--</strong>
+                </div>
+
+                <div class="matrix-item">
+                    <span>False Positive</span>
+                    <strong id="falsePositive">--</strong>
+                </div>
+
+                <div class="matrix-item">
+                    <span>False Negative</span>
+                    <strong id="falseNegative">--</strong>
+                </div>
+
+                <div class="matrix-item">
+                    <span>True Positive</span>
+                    <strong id="truePositive">--</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- False Positive -->
+        <div class="insight-card">
+
+            <div class="insight-card-header">
+                <div>
+                    <p class="section-label">ALERT QUALITY</p>
+                    <h3>False Positive Rate</h3>
+                </div>
+            </div>
+
+            <div class="fpr-display">
+
+                <strong id="falsePositiveRate">--</strong>
+
+                <span>
+                    of normal transactions incorrectly
+                    flagged as risky
+                </span>
+
+            </div>
+
+            <div class="threshold-info">
+                <span>Decision Threshold</span>
+                <strong id="modelThreshold">--</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- False Positive Cost Simulator -->
+    <section class="cost-simulator-section">
+        <div class="insights-header">
+            <div>
+                <p class="section-label">BUSINESS IMPACT</p>
+                <h2>False-Positive Cost Simulator</h2>
+                <p>Estimate the operational impact of incorrectly flagging legitimate transactions.</p>
+            </div>
+        </div>
+
+        <div class="cost-simulator-card">
+            <div class="simulator-inputs">
+                <div class="simulator-input">
+                    <label for="simTotalTransactions">Transactions Analyzed</label>
+                    <input type="number" id="simTotalTransactions" value="1000" min="0">
+                </div>
+
+                <div class="simulator-input">
+                    <label for="simFpr">False Positive Rate (%)</label>
+                    <input type="number" id="simFpr" value="18.60" min="0" max="100" step="0.01">
+                </div>
+
+                <div class="simulator-input">
+                    <label for="simReviewCost">Estimated Review Cost / Flag (₹)</label>
+                    <input type="number" id="simReviewCost" value="50" min="0" step="1">
+                </div>
+
+                <div class="simulator-input">
+                    <label for="simCustomerCost">Estimated Customer Friction / Flag (₹)</label>
+                    <input type="number" id="simCustomerCost" value="25" min="0" step="1">
+                </div>
+            </div>
+
+            <div class="simulator-results">
+                <div class="sim-result">
+                    <span>Estimated False Positives</span>
+                    <strong id="estimatedFalsePositives">186</strong>
+                </div>
+
+                <div class="sim-result">
+                    <span>Review Cost</span>
+                    <strong id="estimatedReviewCost">₹9,300</strong>
+                </div>
+
+                <div class="sim-result">
+                    <span>Customer Friction Cost</span>
+                    <strong id="estimatedCustomerCost">₹4,650</strong>
+                </div>
+
+                <div class="sim-result total-cost">
+                    <span>Estimated Total Impact</span>
+                    <strong id="estimatedTotalCost">₹13,950</strong>
+                </div>
+            </div>
+
+            <div class="simulator-note">
+                <strong>Prototype assumption:</strong>
+                Costs are user-configurable estimates for demonstrating false-positive impact.
+                They are not actual Razorpay operating costs or predicted customer losses.
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Risk Signals -->
+    <div class="insight-card signals-card">
+
+        <div class="insight-card-header">
+            <div>
+                <p class="section-label">MODEL EXPLAINABILITY</p>
+                <h3>Top Risk Signals</h3>
+            </div>
+
+            <span class="signal-count">Top 5</span>
+        </div>
+
+        <div id="riskSignals" class="risk-signals">
+
+            <div class="empty-state">
+                Loading risk signals...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+            <footer>
+                RazorGuard AI • Intelligent Payment Risk Manager
+            </footer>
+
+        <!-- Transaction Details Modal -->
+<div class="modal-overlay" id="transactionModal">
+    <div class="transaction-modal">
+
+        <div class="modal-header">
+            <div>
+                <span class="section-eyebrow">TRANSACTION DETAILS</span>
+                <h2 id="modalTransactionId">Transaction</h2>
+            </div>
+
+            <button class="modal-close" id="closeModal">&times;</button>
+        </div>
+
+        <div class="modal-risk-summary">
+
+            <div class="modal-score">
+                <span>RISK SCORE</span>
+                <strong id="modalRiskScore">--</strong>
+                <small>/100</small>
+            </div>
+
+            <div class="modal-risk-info">
+                <span class="risk-label">RISK LEVEL</span>
+                <h3 id="modalRiskLevel">--</h3>
+                <p id="modalRiskProbability">--</p>
+            </div>
+
+        </div>
+
+        <div class="modal-grid">
+
+            <div class="detail-item">
+                <span>Transaction Amount</span>
+                <strong id="modalAmount">--</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Account Age</span>
+                <strong id="modalAccountAge">--</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Transactions (24h)</span>
+                <strong id="modalTransactions">--</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Failed Transactions</span>
+                <strong id="modalFailedTransactions">--</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Device Changes (30d)</span>
+                <strong id="modalDeviceChanges">--</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Previous Chargebacks</span>
+                <strong id="modalChargebacks">--</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Location Mismatch</span>
+                <strong id="modalLocationMismatch">--</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>International Transaction</span>
+                <strong id="modalInternational">--</strong>
+            </div>
+
+        </div>
+
+        <div class="modal-section">
+            <div class="modal-section-title">
+                <h3>Detected Risk Factors</h3>
+                <span id="modalFactorCount">0</span>
+            </div>
+
+            <div id="modalRiskFactors" class="modal-factors">
+                <span class="empty-state">No risk factors detected.</span>
+            </div>
+        </div>
+
+        <div class="modal-action">
+            <span>RECOMMENDED ACTION</span>
+            <strong id="modalRecommendedAction">--</strong>
+        </div>
+
+    </div>
+</div>    
+
+        </main>
+
+    </div>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
