@@ -6,7 +6,7 @@ Built for the Razorpay AI Buildathon 2026 — Track 2: AI Risk Manager.
 
 🚀 Overview
 
-RazorGuard AI is an intelligent payment risk management prototype designed to identify potentially risky transactions using transaction-level behavioral and contextual signals.
+RazorGuard AI is an intelligent payment risk management prototype designed to identify potentially risky transactions using behavioral and contextual transaction signals.
 
 The system combines a Random Forest machine learning model with an explainable rule layer to:
 
@@ -26,21 +26,37 @@ Maintain a transaction audit trail
 
 Provide model performance and risk analytics
 
-Prototype note: The project uses a synthetic transaction dataset and is intended for demonstration and experimentation, not production fraud detection.
+Prototype note: This project uses a synthetic transaction dataset and is intended for demonstration and experimentation, not production fraud detection.
 
 ✨ Key Features
 
 🤖 AI Risk Detection
 
-Uses a trained Random Forest classifier to estimate the probability that a transaction is risky.
+Random Forest-based transaction risk prediction.
 
 📊 Risk Scoring
 
-Each analyzed transaction receives a risk score, probability, risk level, and detected risk signals.
+Each transaction receives a risk score, probability, risk level, and detected risk signals.
 
 🔍 Explainable Risk Signals
 
-The system highlights factors associated with elevated risk, including previous chargebacks, location mismatch, transaction amount, account age, device changes, transaction frequency, failed transactions, and international activity.
+The application surfaces signals such as:
+
+Previous chargebacks
+
+Location mismatch
+
+Transaction amount
+
+Account age
+
+Device changes
+
+Transaction frequency
+
+Failed transactions
+
+International activity
 
 🛡️ Automated Defensive Actions
 
@@ -60,7 +76,7 @@ Step-up verification
 
 Hold for manual review and additional verification
 
-📈 Risk Analytics Dashboard
+📈 Risk Analytics
 
 Risk distribution
 
@@ -104,7 +120,7 @@ Allow / Verify / Hold
 
 🧠 Machine Learning Model
 
-RazorGuard AI uses a Random Forest Classifier trained on a synthetic transaction dataset.
+RazorGuard AI uses a Random Forest Classifier trained on a synthetic dataset containing 10,000 transaction records.
 
 Model Configuration
 
@@ -117,11 +133,7 @@ Class Weight: Balanced
 Max Features: sqrt
 Random State: 42
 
-Dataset
-
-The project uses a synthetic dataset containing 10,000 transaction records.
-
-Features:
+Features
 
 amount
 account_age_days
@@ -221,8 +233,6 @@ International Transaction
 
 0.0392
 
-These signals are surfaced in the application to make risk decisions easier to understand.
-
 🛡️ Risk Decision Flow
 
 Transaction
@@ -255,29 +265,43 @@ Risk Score
 
 Dashboard
 
-
+<p align="center">
+  <img src="./assets/screenshots/dashboard.png" alt="RazorGuard AI Dashboard" width="950">
+</p>
 
 🔴 High-Risk Detection
 
-
+<p align="center">
+  <img src="./assets/screenshots/high-risk-detection.png" alt="High-Risk Detection" width="950">
+</p>
 
 🟡 Medium-Risk Action
 
-
+<p align="center">
+  <img src="./assets/screenshots/medium-risk-action.png" alt="Medium-Risk Action" width="950">
+</p>
 
 🟢 Low-Risk Action
 
-
+<p align="center">
+  <img src="./assets/screenshots/low-risk-action.png" alt="Low-Risk Action" width="950">
+</p>
 
 📊 Risk Insights & Analytics
 
-
+<p align="center">
+  <img src="./assets/screenshots/risk-insights-analytics.png" alt="Risk Insights and Analytics" width="950">
+</p>
 
 🧾 Transaction Audit Trail
 
-
+<p align="center">
+  <img src="./assets/screenshots/transaction-audit-trail.png" alt="Transaction Audit Trail" width="950">
+</p>
 
 🔌 API Endpoints
+
+The backend is implemented using Flask.
 
 Method
 
@@ -345,8 +369,6 @@ Action: HOLD
 🔴 HIGH Risk
 
 Multiple elevated-risk signals can result in a HIGH risk classification.
-
-Recommended response:
 
 HOLD — Manual review and additional verification required
 
@@ -423,7 +445,7 @@ cd RazorGuard-AI
 Windows
 
 python -m venv venv
-.env\Scriptsctivate
+.\venv\Scripts\activate
 
 3. Install Dependencies
 
@@ -431,7 +453,7 @@ pip install -r requirements.txt
 
 4. Run the Application
 
-python apppp.py
+python app\app.py
 
 Open:
 
@@ -445,7 +467,7 @@ python data\generate_dataset.py
 
 Train the baseline model:
 
-python src	rain_model.py
+python src\train_model.py
 
 Train the improved model:
 
@@ -461,7 +483,21 @@ Payment risk systems need to balance security with customer experience.
 
 A model that flags too many legitimate transactions can create unnecessary friction, while a model that misses risky transactions can increase exposure.
 
-RazorGuard AI therefore exposes precision, recall, F1 score, false-positive rate, confusion matrix, decision threshold, and false-positive cost simulation.
+RazorGuard AI therefore exposes:
+
+Precision
+
+Recall
+
+F1 Score
+
+False Positive Rate
+
+Confusion Matrix
+
+Decision Threshold
+
+False-Positive Cost Simulation
 
 ⚠️ Limitations
 
