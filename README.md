@@ -1,167 +1,152 @@
 🛡️ RazorGuard AI — Intelligent Payment Risk Manager
 
-A defense-focused payment risk management prototype that analyzes transaction signals, estimates risk, explains detected signals, and recommends an appropriate defensive action.
+A defense-focused AI payment risk management prototype that analyzes transaction signals, estimates risk, explains detected risk factors, and recommends an appropriate defensive action.
 
-Built for the Razorpay AI Buildathon Track 2: AI Risk Manager.
+Built for the Razorpay AI Buildathon 2026 — Track 2: AI Risk Manager.
 
-RazorGuard AI is a defense-focused payment risk management prototype built for the Razorpay AI Buildathon Track 2: AI Risk Manager. It analyzes transaction signals, predicts the probability of risk, explains the main risk factors, and recommends an action such as Allow, Step-up Verification, or Hold for Manual Review.
+🚀 Overview
 
-🖥️ Product Screenshots
+RazorGuard AI is an intelligent payment risk management prototype designed to identify potentially risky transactions using transaction-level behavioral and contextual signals.
 
-Dashboard
+The system combines a Random Forest machine learning model with an explainable rule layer to:
 
+Analyze transaction risk
 
+Generate a risk probability score
 
-HIGH-Risk Detection
+Classify transactions as LOW, MEDIUM, or HIGH risk
 
+Explain detected risk signals
 
+Estimate the amount at risk
 
-MEDIUM-Risk Action
+Recommend a defensive action
 
+Maintain a transaction audit trail
 
+Provide model performance and risk analytics
 
-LOW-Risk Action
+Prototype note: The project uses a synthetic transaction dataset and is intended for demonstration and experimentation, not production fraud detection.
 
+✨ Key Features
 
+🤖 AI Risk Detection
 
-Risk Insights & Analytics
+Uses a trained Random Forest classifier to estimate the probability that a transaction is risky.
 
+📊 Risk Scoring
 
+Each analyzed transaction receives a risk score, probability, risk level, and detected risk signals.
 
-Transaction Audit Trail
+🔍 Explainable Risk Signals
 
+The system highlights factors associated with elevated risk, including previous chargebacks, location mismatch, transaction amount, account age, device changes, transaction frequency, failed transactions, and international activity.
 
+🛡️ Automated Defensive Actions
 
-✨ Highlights
+Risk Level
 
-🤖 Random Forest risk classifier trained on a synthetic transaction dataset
+Recommended Action
 
-📊 Held-out validation/testing metrics with precision, recall, F1 and confusion matrix
+🟢 LOW
 
-🎚️ Threshold tuning on a validation split to balance precision and recall
+Allow transaction and continue monitoring
 
-🔎 Explainable risk factors based on transaction/account signals
+🟡 MEDIUM
 
-⚡ Flask REST API for real-time transaction analysis
+Step-up verification
 
-🧾 In-memory transaction audit trail with CSV export from the dashboard
+🔴 HIGH
 
-💰 Amount-at-risk / exposure estimate in the UI
+Hold for manual review and additional verification
 
-📈 Risk distribution, activity trend and model performance views
+📈 Risk Analytics Dashboard
 
-🧪 HIGH / MEDIUM / LOW test scenarios for demo validation
+Risk distribution
 
-🏗️ Architecture
+Risk activity trend
 
-                    ┌──────────────────────┐
-                    │   Web Dashboard      │
-                    │ HTML / CSS / JS      │
-                    └──────────┬───────────┘
-                               │ POST /api/analyze
-                               ▼
-                    ┌──────────────────────┐
-                    │      Flask API       │
-                    └──────────┬───────────┘
-                               ▼
-                    ┌──────────────────────┐
-                    │     Risk Engine      │
-                    │  Model + Rule-based  │
-                    │      Explanation     │
-                    └──────────┬───────────┘
-                               ▼
-                    ┌──────────────────────┐
-                    │  Random Forest Model │
-                    └──────────┬───────────┘
-                               ▼
-                    ┌──────────────────────┐
-                    │ Risk Score + Level   │
-                    │ Reasons + Action     │
-                    └──────────────────────┘
+Model performance
 
-🔄 Risk Decision Flow
+Confusion matrix
+
+False-positive rate
+
+Top risk signals
+
+False-positive cost simulation
+
+Transaction audit trail
+
+🏗️ System Architecture
 
 Transaction Input
-      ↓
-Feature Extraction
-      ↓
-Random Forest Probability
-      ↓
-Risk Score (0–100)
-      ↓
-┌───────────────┬──────────────────┬──────────────────┐
-│ LOW           │ MEDIUM           │ HIGH             │
-│ < 40          │ 40–69.99         │ ≥ 70             │
-│ ALLOW         │ STEP-UP          │ HOLD             │
-└───────────────┴──────────────────┴──────────────────┘
+       │
+       ▼
+   Flask REST API
+       │
+       ▼
+    Risk Engine
+       │
+       ├── Feature Processing
+       ├── ML Prediction
+       ├── Risk Scoring
+       └── Risk Explanation
+       │
+       ▼
+ Random Forest Model
+       │
+       ▼
+ LOW / MEDIUM / HIGH
+       │
+       ▼
+Allow / Verify / Hold
 
-📦 Project Structure
+🧠 Machine Learning Model
 
-RazorGuard-AI/
-├── data/
-│   └── transactions.csv
-├── models/
-│   └── razorguard_improved_model.joblib
-├── src/
-│   └── risk_engine.py
-├── app/
-│   ├── app.py
-│   ├── templates/
-│   │   └── index.html
-│   └── static/
-│       ├── style.css
-│       └── script.js
-├── notebooks/
-├── requirements.txt
-└── README.md
+RazorGuard AI uses a Random Forest Classifier trained on a synthetic transaction dataset.
 
-🧠 Model
+Model Configuration
 
-The prototype uses RandomForestClassifier with class balancing. The improved training setup uses:
+Algorithm: Random Forest Classifier
+Estimators: 400
+Maximum Depth: 10
+Minimum Samples Split: 8
+Minimum Samples Leaf: 3
+Class Weight: Balanced
+Max Features: sqrt
+Random State: 42
 
-400 trees
+Dataset
 
-max depth: 10
+The project uses a synthetic dataset containing 10,000 transaction records.
 
-minimum samples split: 8
+Features:
 
-minimum samples leaf: 3
+amount
+account_age_days
+transactions_24h
+failed_transactions_24h
+device_changes_30d
+location_mismatch
+international_transaction
+previous_chargebacks
 
-class_weight="balanced"
+Target:
 
-max_features="sqrt"
-
-random_state=42
-
-The dataset contains transaction/account signals such as:
-
-transaction amount
-
-account age
-
-transactions in the last 24 hours
-
-failed transactions in the last 24 hours
-
-device changes in the last 30 days
-
-location mismatch
-
-international transaction flag
-
-previous chargebacks
-
-The dataset is synthetic and intended for prototype/testing purposes only.
+is_risky
 
 📊 Model Evaluation
 
-The model was trained with a 60/20/20 train/validation/test split. The validation set was used for threshold tuning and the final test set remained untouched for final evaluation.
+The improved model uses a 60% training / 20% validation / 20% untouched test split.
 
-Final held-out test results
+The validation set was used for decision-threshold tuning, while final metrics were measured on the untouched test set.
+
+Final Held-Out Test Performance
 
 Metric
 
-Result
+Score
 
 Accuracy
 
@@ -183,84 +168,160 @@ False Positive Rate
 
 18.60%
 
-False Positives
-
-318
-
-False Negatives
-
-106
-
-True Positives
-
-184
-
-True Negatives
-
-1392
-
 Decision Threshold
 
 0.52
 
-These metrics come from the current synthetic prototype dataset and should not be interpreted as production fraud-detection performance.
+Confusion Matrix
 
-🔍 Top Risk Signals
+                 Predicted
+              Not Risky   Risky
 
-Current model feature importance shows the strongest contribution from:
+Actual
+Not Risky       1392       318
+Risky            106       184
 
-previous_chargebacks
+Metrics are based on the project's synthetic dataset and held-out test split. They should not be interpreted as real-world or production fraud-detection performance.
 
-location_mismatch
+🔎 Top Risk Signals
 
-amount
+Feature
 
-account_age_days
+Importance
 
-device_changes_30d
+Previous Chargebacks
 
-transactions_24h
+0.3382
 
-failed_transactions_24h
+Location Mismatch
 
-international_transaction
+0.1633
 
-🚦 Risk Actions
+Transaction Amount
 
-HIGH
+0.1269
 
-Action: Hold — Manual review and additional verification required
+Account Age
 
-Triggered when the model risk score is at least 70.
+0.1115
 
-MEDIUM
+Device Changes
 
-Action: Step-up verification — Request additional verification
+0.0963
 
-Triggered for scores from 40 up to 70.
+Transactions in 24h
 
-LOW
+0.0631
 
-Action: Allow — Continue transaction and monitor
+Failed Transactions
 
-Triggered below a risk score of 40.
+0.0614
+
+International Transaction
+
+0.0392
+
+These signals are surfaced in the application to make risk decisions easier to understand.
+
+🛡️ Risk Decision Flow
+
+Transaction
+     │
+     ▼
+Feature Analysis
+     │
+     ▼
+ML Risk Probability
+     │
+     ▼
+Risk Score
+     │
+     ├── < 40 ───────► LOW
+     │                   │
+     │                   ▼
+     │                 ALLOW
+     │
+     ├── 40–69 ──────► MEDIUM
+     │                   │
+     │                   ▼
+     │          STEP-UP VERIFICATION
+     │
+     └── ≥ 70 ───────► HIGH
+                         │
+                         ▼
+                  MANUAL REVIEW
+
+🖥️ Product Screenshots
+
+Dashboard
+
+
+
+🔴 High-Risk Detection
+
+
+
+🟡 Medium-Risk Action
+
+
+
+🟢 Low-Risk Action
+
+
+
+📊 Risk Insights & Analytics
+
+
+
+🧾 Transaction Audit Trail
+
+
 
 🔌 API Endpoints
 
-Health Check
+Method
 
-GET /api/health
+Endpoint
 
-Model Metrics
+Purpose
 
-GET /api/metrics
+GET
 
-Analyze Transaction
+/
 
-POST /api/analyze
-Content-Type: application/json
+Application landing / health response
 
-Example request:
+GET
+
+/api/health
+
+Backend health check
+
+GET
+
+/api/metrics
+
+Model performance metrics
+
+POST
+
+/api/analyze
+
+Analyze a transaction
+
+GET
+
+/api/audit
+
+Retrieve audit records
+
+DELETE
+
+/api/audit
+
+Clear audit records
+
+Example Request
 
 {
   "amount": 1250,
@@ -273,107 +334,214 @@ Example request:
   "previous_chargebacks": 1
 }
 
-Audit Trail
+Example Result
 
-GET /api/audit
-DELETE /api/audit
+Risk Level: HIGH
+Risk Score: ~88
+Action: HOLD
 
-🚀 Local Setup
+🧪 Example Risk Scenarios
 
-1. Clone the repository
+🔴 HIGH Risk
 
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+Multiple elevated-risk signals can result in a HIGH risk classification.
+
+Recommended response:
+
+HOLD — Manual review and additional verification required
+
+🟡 MEDIUM Risk
+
+Moderate risk signals can trigger:
+
+STEP-UP VERIFICATION
+
+🟢 LOW Risk
+
+Lower-risk transactions can continue with:
+
+ALLOW — Continue transaction and monitor
+
+📁 Project Structure
+
+RazorGuard-AI/
+│
+├── app/
+│   ├── app.py
+│   ├── static/
+│   │   ├── script.js
+│   │   └── style.css
+│   └── templates/
+│       └── index.html
+│
+├── assets/
+│   └── screenshots/
+│       ├── dashboard.png
+│       ├── high-risk-detection.png
+│       ├── medium-risk-action.png
+│       ├── low-risk-action.png
+│       ├── risk-insights-analytics.png
+│       └── transaction-audit-trail.png
+│
+├── data/
+│   ├── generate_dataset.py
+│   └── transactions.csv
+│
+├── models/
+│   ├── razorguard_model.joblib
+│   └── razorguard_improved_model.joblib
+│
+├── src/
+│   ├── train_model.py
+│   ├── improve_model.py
+│   ├── evaluate_model.py
+│   └── risk_engine.py
+│
+├── .gitignore
+├── requirements.txt
+└── README.md
+
+⚙️ Tech Stack
+
+Backend: Python, Flask, Flask-CORS
+
+Machine Learning: Scikit-learn, Random Forest, NumPy, Pandas, Joblib
+
+Frontend: HTML5, CSS3, JavaScript
+
+Development: Git, GitHub, Python Virtual Environment
+
+🚀 Getting Started
+
+1. Clone the Repository
+
+git clone https://github.com/Ashutosh9-pan/RazorGuard-AI.git
 cd RazorGuard-AI
 
-2. Create the virtual environment
+2. Create a Virtual Environment
+
+Windows
 
 python -m venv venv
+.env\Scriptsctivate
 
-3. Install dependencies
+3. Install Dependencies
 
-.\venv\Scripts\python.exe -m pip install -r requirements.txt
+pip install -r requirements.txt
 
-4. Start the application
+4. Run the Application
 
-.\venv\Scripts\python.exe app\app.py
+python apppp.py
 
 Open:
 
 http://127.0.0.1:5000
 
-🧪 Demo Test Cases
+🧪 Model Training
 
-HIGH-risk transaction
+Generate the synthetic dataset:
 
-{
-  "amount": 1250,
-  "account_age_days": 12,
-  "transactions_24h": 15,
-  "failed_transactions_24h": 4,
-  "device_changes_30d": 3,
-  "location_mismatch": 1,
-  "international_transaction": 1,
-  "previous_chargebacks": 1
-}
+python data\generate_dataset.py
 
-Expected demo behavior: HIGH risk with multiple detected risk signals and a HOLD recommendation.
+Train the baseline model:
 
-For the demo, also test representative LOW and MEDIUM transactions through the dashboard to show all three decision paths.
+python src	rain_model.py
 
-💸 False-Positive Awareness
+Train the improved model:
 
-The dashboard includes a false-positive cost simulator so reviewers can see how incorrect blocks can create operational cost. This is intentionally included because a useful risk system must consider both missed risky transactions and legitimate transactions that are incorrectly flagged.
+python src\improve_model.py
 
-✅ Demo Notes
+Evaluate the model:
 
-The screenshots show representative HIGH, MEDIUM, and LOW outcomes generated by the running prototype. The displayed audit history is session-based and reflects transactions analyzed during testing.
+python src\evaluate_model.py
+
+💰 False-Positive Awareness
+
+Payment risk systems need to balance security with customer experience.
+
+A model that flags too many legitimate transactions can create unnecessary friction, while a model that misses risky transactions can increase exposure.
+
+RazorGuard AI therefore exposes precision, recall, F1 score, false-positive rate, confusion matrix, decision threshold, and false-positive cost simulation.
 
 ⚠️ Limitations
 
-This is a prototype, not a production payment-fraud system.
+This project is a prototype:
 
-Training data is synthetic.
+The dataset is synthetic.
 
-The audit trail is stored in memory and is cleared when the server restarts.
+The model has not been validated on real payment data.
 
-No payment processor is connected.
+Real-world risk patterns can change over time.
 
-No real customer or card data is used.
+Risk rules are prototype heuristics.
 
-Model performance may change significantly on real-world data.
+The audit trail is currently maintained in application memory.
 
-Production deployment would require stronger security, monitoring, data governance, model drift checks, access controls and persistent storage.
+The model should not be considered production-ready fraud detection.
+
+A production implementation would require additional validation, monitoring, privacy controls, security hardening, model governance, and evaluation on representative real-world data.
 
 🔮 Future Improvements
 
-Add a larger, more realistic labeled dataset
+Real-time event streaming
 
-Calibrate probabilities and optimize threshold against business cost
+Persistent transaction storage
 
-Add persistent audit storage
+Model monitoring and drift detection
 
-Add model versioning and drift monitoring
+Automated threshold optimization
 
-Add authentication and role-based access
+Advanced anomaly detection
 
-Add automated feedback from reviewed transactions
+Ensemble risk models
 
-Integrate with a real payment event stream in a controlled environment
+Explainable AI techniques
 
-🛠️ Tech Stack
+Authentication and role-based access
 
-Frontend: HTML5, CSS3, JavaScript
+Production-grade observability
 
-Backend: Python, Flask, Flask-CORS
+Human-review feedback loops
 
-ML: scikit-learn, Random Forest, NumPy, pandas, joblib
+Integration with payment processing systems
+
+🎯 Buildathon Objective
+
+RazorGuard AI was developed for:
+
+Razorpay AI Buildathon 2026 — Track 2: AI Risk Manager
+
+The project demonstrates a working AI-assisted risk management workflow:
+
+Detect → Explain → Score → Decide → Respond
+
+with measurable model performance and transparent limitations.
 
 👨‍💻 Author
 
 Ashutosh Panwar
 
-B.Tech CSE Graduate | AI/ML Developer | Data Analyst | Android Developer
+B.Tech CSE Graduate
+AI/ML Developer | Data Analyst | Android Developer
 
-Buildathon Note
+GitHub: Ashutosh9-pan
 
-RazorGuard AI is a defensive risk-management prototype created for the Razorpay AI Buildathon Track 2. It focuses on identifying potentially risky transactions, explaining risk signals, and selecting an appropriate defensive response.
+Portfolio: ashutosh-panwar-portfolio.vercel.app
+
+⭐ Project Summary
+
+RazorGuard AI demonstrates how machine learning, explainable risk signals, and automated defensive actions can be combined into a single payment risk management workflow.
+
+Transaction
+     ↓
+AI Risk Analysis
+     ↓
+Explainable Signals
+     ↓
+Risk Classification
+     ↓
+Defensive Action
+     ↓
+Audit & Analytics
+
+Built as a prototype for the Razorpay AI Buildathon 2026.
