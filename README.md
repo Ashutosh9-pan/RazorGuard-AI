@@ -1,5 +1,9 @@
 🛡️ RazorGuard AI — Intelligent Payment Risk Manager
 
+> **Stack:** Python • Flask • Random Forest • Machine Learning
+
+[📂 View Repository](https://github.com/Ashutosh9-pan/RazorGuard-AI)
+
 A defense-focused AI payment risk management prototype that analyzes transaction signals, estimates risk, explains detected risk factors, and recommends an appropriate defensive action.
 
 Built for the Razorpay AI Buildathon 2026 — Track 2: AI Risk Manager.
